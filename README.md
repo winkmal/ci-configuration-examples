@@ -1,9 +1,5 @@
 [![MATLAB](https://github.com/winkmal/ci-configuration-examples/actions/workflows/ci.yml/badge.svg)](https://github.com/winkmal/ci-configuration-examples/actions/workflows/ci.yml)
 
-|:---------------------------|:-----------------:|:----------------------------:|:--------------------------:|
-| [![Build Status](https://dev.azure.com/iat-ci/ci-configuration-examples/_apis/build/status/mathworks.ci-configuration-examples)](https://dev.azure.com/iat-ci/ci-configuration-examples/_build) <br> ![Azure DevOps Coverage](https://img.shields.io/azure-devops/coverage/iat-ci/ci-configuration-examples/36) | [![CircleCI](https://circleci.com/gh/mathworks/ci-configuration-examples.svg?style=svg)](https://circleci.com/gh/mathworks/ci-configuration-examples) <br><br> | [![MATLAB](https://github.com/mathworks/ci-configuration-examples/actions/workflows/ci.yml/badge.svg)](https://github.com/mathworks/ci-configuration-examples/actions/workflows/ci.yml) <br><br> | [![Build Status](https://app.travis-ci.com/mathworks/ci-configuration-examples.svg)](https://app.travis-ci.com/mathworks/ci-configuration-examples) <br><br> |
-
-
 # Continuous Integration (CI) configuration examples for MATLAB<sup>&reg;</sup>
 
 Are you interested in automating your testing with CI?
@@ -41,24 +37,6 @@ To use your MATLAB code or Simulink<sup>&reg;</sup> models with this repository,
 ## Badges
 
 Badges look really great, but they're not always easy to set up. Take a look at the badges, badge code, and reference links below to get started with badges for your repository.
-
-<br>
-
-| **Azure&nbsp;DevOps** |  |
-|:---------------------------|:-|
-| Badges | [![Build Status](https://dev.azure.com/iat-ci/ci-configuration-examples/_apis/build/status/mathworks.ci-configuration-examples)](https://dev.azure.com/iat-ci/ci-configuration-examples/_build) <br> ![Azure DevOps Coverage](https://img.shields.io/azure-devops/coverage/iat-ci/ci-configuration-examples/36) |
-| Badge Code | \[\!\[Build Status](https[]()://dev.azure.com/***AZURE_DEVOPS_ORG***/***AZURE_DEVOPS_PROJECT_NAME***/_apis/build/status/***GITHUB_USERNAME***.***GITHUB_REPO_NAME***)](https[]()://dev.azure.com/***AZURE_DEVOPS_ORG***/***AZURE_DEVOPS_PROJECT_NAME***/_build) <br><br> \!\[Azure DevOps Coverage](https[]()://img.shields.io/azure-devops/coverage/***AZURE_DEVOPS_ORG***/***AZURE_DEVOPS_PROJECT_NAME***/***AZURE_DEVOPS_DEFINITION_ID***) |
-| Badge Help | [Blog with helpful information for setting up Azure DevOps badges](https://gregorsuttie.com/2019/03/20/azure-devops-add-your-build-status-badges-to-your-wiki/) |
-
-<br>
-
-| **CircleCI** |  |
-|:------------------|:-|
-| Badge | [![CircleCI](https://circleci.com/gh/mathworks/ci-configuration-examples.svg?style=svg)](https://circleci.com/gh/mathworks/ci-configuration-examples) |
-| Badge Code | \[\!\[CircleCI](https[]()://circleci.com/***SOURCE_CONTROL_SYSTEM***/***GITHUB_USERNAME***/***GITHUB_REPO_NAME***.svg?style=svg)](https[]()://circleci.com/***SOURCE_CONTROL_SYSTEM***/***GITHUB_USERNAME***/***GITHUB_REPO_NAME***) |
-| Badge Help | [CircleCI documentation for setting up badges](https://circleci.com/docs/2.0/status-badges "CircleCI documentation for setting up badges") |
-
-<br>
 
 | **GitHub&nbsp;Actions** |  |
 |:-----------------------------|:-|
@@ -156,58 +134,6 @@ The repository includes these files:
 
 
 ## CI configuration files
-
-### Azure DevOps
-```yml
-pool:
-  vmImage: ubuntu-latest
-steps:
-  - task: InstallMATLAB@0
-  - task: RunMATLABTests@0
-    inputs:
-      sourceFolder: code
-      codeCoverageCobertura: code-coverage/coverage.xml
-      testResultsJUnit: test-results/results.xml
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFormat: 'JUnit'
-      testResultsFiles: 'test-results/results.xml'
-  - task: PublishCodeCoverageResults@1
-    inputs:
-      codeCoverageTool: 'Cobertura'
-      summaryFileLocation: 'code-coverage/coverage.xml'
-      pathToSources: 'code/'
-
-  # As an alternative to RunMATLABTests, you can use RunMATLABCommand to execute a MATLAB script, function, or statement.
-  # - task: RunMATLABCommand@0
-  #   inputs:
-  #     command: addpath('code'); results = runtests('IncludeSubfolders', true); assertSuccess(results);
-```
-
-<br>
-
-### CircleCI
-```yml
-version: 2.1
-orbs:
-  matlab: mathworks/matlab@0
-  codecov: codecov/codecov@1
-jobs:
-  build:
-    machine:
-      image: ubuntu-2004:202107-02
-    steps:
-      - checkout
-      - matlab/install
-      - matlab/run-tests:
-          source-folder: code
-
-      # As an alternative to run-tests, you can use run-command to execute a MATLAB script, function, or statement.
-      # - matlab/run-command:
-      #     command: addpath('code'); results = runtests('IncludeSubfolders', true); assertSuccess(results);
-```
-
-<br>
 
 ### GitHub Actions
 ```yml
